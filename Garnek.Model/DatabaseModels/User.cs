@@ -1,5 +1,5 @@
 ﻿using System;
 namespace Garnek.Model.DatabaseModels;
 
-public record User(string Name, Guid Id, DateTime CreatedAt, ICollection<Phrase> Phrases) : BaseModel(Id, CreatedAt);
+public record User(Guid Id, DateTime CreatedAt, string Name,  Guid TeamId, Team Team, ICollection<Phrase> Phrases) : BaseModel(Id, CreatedAt);
 
