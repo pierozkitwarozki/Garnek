@@ -1,4 +1,7 @@
 ﻿using System;
 namespace Garnek.Model.DatabaseModels;
 
-public record Game(Guid Id, DateTime CreatedAt, ICollection<Team> Teams) : BaseModel(Id, CreatedAt);
+public class Game : BaseModel
+{
+    public ICollection<Team> Teams { get; init; }
+}

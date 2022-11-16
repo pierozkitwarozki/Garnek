@@ -19,15 +19,14 @@
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite.Core" />
     <None Remove="DataAccess\" />
     <None Remove="Extensions\" />
+    <None Remove="Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Garnek.Model\Garnek.Model.csproj" />
@@ -35,5 +34,6 @@
   <ItemGroup>
     <Folder Include="DataAccess\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Configuration\" />
   </ItemGroup>
 </Project>

@@ -1,4 +1,8 @@
 ﻿using System;
 namespace Garnek.Model.DatabaseModels;
 
-public record Category(Guid Id, DateTime CreatedAt, string Name, ICollection<Phrase> Phrases) : BaseModel(Id, CreatedAt);
+public class Category : BaseModel
+{
+    public string Name { get; init; }
+    public ICollection<Phrase> Phrases { get; init; }
+}

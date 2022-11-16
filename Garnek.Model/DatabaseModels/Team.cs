@@ -1,7 +1,11 @@
 ﻿using System;
 namespace Garnek.Model.DatabaseModels;
 
-public record Team(Guid Id, DateTime CreatedAt, string Name, ICollection<User> Users, Guid GameId, Game Game, int Points)
-    : BaseModel(Id, CreatedAt);
-
-
+public class Team : BaseModel
+{
+    public string Name { get; init; }
+    public ICollection<User> Users { get; init; }
+    public Guid GameId { get; init; }
+    public Game Game { get; init; }
+    public int Points { get; init; }
+}

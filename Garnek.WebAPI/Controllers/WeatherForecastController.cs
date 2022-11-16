@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Garnek.Infrastructure.DataAccess;
+using Garnek.Model.DatabaseModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Garnek.WebAPI.Controllers;
 
@@ -6,28 +9,30 @@ namespace Garnek.WebAPI.Controllers;
 [Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
+    public WeatherForecastController(DatabaseContext context)
     {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
-    private readonly ILogger<WeatherForecastController> _logger;
-
-    public WeatherForecastController(ILogger<WeatherForecastController> logger)
-    {
-        _logger = logger;
+        _context = context;
     }
+
+    private readonly DatabaseContext _context;
 
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        return Enumerable.Empty<WeatherForecast>();
+    }
+
+    [HttpPost(Name = "AddWeatherForecast")]
+    public bool Add()
+    {
+        _context.Users.Add(new User
         {
-            Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+            Id = Guid.NewGuid(),
+            Name = "Test"
+        });
+        _context.SaveChanges();
+        return true;
+
     }
 }
 
