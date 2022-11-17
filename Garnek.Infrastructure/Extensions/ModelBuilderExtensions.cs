@@ -12,12 +12,14 @@ public static class ModelBuilderExtensions
             .HasOne(x => x.User)
             .WithMany(x => x.Phrases)
             .HasForeignKey(x => x.UserId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.Entity<Phrase>()
             .HasOne(x => x.Category)
             .WithMany(x => x.Phrases)
             .HasForeignKey(x => x.CategoryId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
 
         return builder;
@@ -29,6 +31,7 @@ public static class ModelBuilderExtensions
             .HasOne(x => x.Team)
             .WithMany(x => x.Users)
             .HasForeignKey(x => x.TeamId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
 
         return builder;
@@ -40,6 +43,7 @@ public static class ModelBuilderExtensions
             .HasOne(x => x.Game)
             .WithMany(x => x.Teams)
             .HasForeignKey(x => x.GameId)
+            .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
 
         return builder;

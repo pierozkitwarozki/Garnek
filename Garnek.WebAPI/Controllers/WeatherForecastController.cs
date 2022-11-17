@@ -1,7 +1,6 @@
 ﻿using Garnek.Infrastructure.DataAccess;
 using Garnek.Model.DatabaseModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace Garnek.WebAPI.Controllers;
 

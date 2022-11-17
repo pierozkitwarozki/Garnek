@@ -3,5 +3,5 @@ namespace Garnek.Model.DatabaseModels;
 
 public class Game : BaseModel
 {
-    public ICollection<Team> Teams { get; init; }
+    public virtual ICollection<Team> Teams { get; init; }
 }
