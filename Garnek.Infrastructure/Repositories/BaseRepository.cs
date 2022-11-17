@@ -1,11 +1,12 @@
+using Garnek.Application.Repositories;
 using Garnek.Infrastructure.DataAccess;
 using Garnek.Model.DatabaseModels;
 
-namespace Garnek.Application.Repositories;
+namespace Garnek.Infrastructure.Repositories;
 
 public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
 {
-    private readonly DatabaseContext _context;
+    protected readonly DatabaseContext _context;
 
     public BaseRepository(DatabaseContext context)
     {
@@ -47,6 +48,20 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
         var entity = await _context.FindAsync<T>(id);
 
         return entity;
+    }
+
+    public async Task<bool> DeleteByIdAsync(Guid id)
+    {
+        var entity = await _context.FindAsync<T>(id);
+
+        if (entity is null)
+        {
+            return false;
+        }
+
+        _context.Remove<T>(entity);
+
+        return await _context.SaveChangesAsync() > 0;
     }
 
     public abstract Task<ICollection<T>> GetAllAsync();

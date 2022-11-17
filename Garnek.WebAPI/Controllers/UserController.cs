@@ -1,37 +1,54 @@
-﻿using Garnek.Infrastructure.DataAccess;
+﻿using Garnek.Application.Repositories;
+using Garnek.Infrastructure.DataAccess;
 using Garnek.Model.DatabaseModels;
+using Garnek.Model.Dtos;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Garnek.WebAPI.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherForecastController : ControllerBase
+public class UserController : ControllerBase
 {
-    public WeatherForecastController(DatabaseContext context)
+    public UserController(IUserRepository userRepository)
     {
-        _context = context;
+        _userRepository = userRepository;
     }
 
     private readonly DatabaseContext _context;
+    private readonly IUserRepository _userRepository;
 
-    [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    [HttpGet("/{userId:guid}")]
+    public async Task<IActionResult> GetUser(Guid userId)
     {
-        return Enumerable.Empty<WeatherForecast>();
+        var user = await _userRepository.GetEntityByIdAsync(userId);
+
+        return user is not null ? Ok(user) : NotFound();
     }
 
-    [HttpPost(Name = "AddWeatherForecast")]
-    public bool Add()
+    [HttpPost("add")]
+    public async Task<IActionResult> AddUser([FromBody]AddUserRequest request)
     {
-        _context.Users.Add(new User
-        {
-            Id = Guid.NewGuid(),
-            Name = "Test"
-        });
-        _context.SaveChanges();
-        return true;
+        var user = new User {
+            Name = request.Name
+        };
+        var success = await _userRepository.AddEntityAsync(user);
 
+        return success ? Ok(user) : BadRequest();
+    }
+
+    [HttpPatch]
+    public async Task<IActionResult> UpdateUserName([FromQuery]UpdateUserRequest request)
+    {
+        var user = await _userRepository.GetEntityByIdAsync(request.UserId);
+
+        if (user is null) return NotFound();
+
+        user.Name = request.Name;
+
+        var updatedUser = await _userRepository.UpdateEntityAsync(user);
+
+        return updatedUser is not null ? Ok(user) : BadRequest();
     }
 }
 

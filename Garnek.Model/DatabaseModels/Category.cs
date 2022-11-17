@@ -1,8 +1,7 @@
-﻿using System;
-namespace Garnek.Model.DatabaseModels;
+﻿namespace Garnek.Model.DatabaseModels;
 
 public class Category : BaseModel
 {
-    public string Name { get; init; }
-    public virtual ICollection<Phrase> Phrases { get; init; }
+    public string Name { get; set; }
+    public virtual ICollection<Phrase> Phrases { get; set; }
 }

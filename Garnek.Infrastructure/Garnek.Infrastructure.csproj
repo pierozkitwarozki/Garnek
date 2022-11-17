@@ -20,6 +20,7 @@
     <None Remove="DataAccess\" />
     <None Remove="Extensions\" />
     <None Remove="Configuration\" />
+    <None Remove="Repositories\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
@@ -30,10 +31,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Garnek.Model\Garnek.Model.csproj" />
+    <ProjectReference Include="..\Garnek.Application\Garnek.Application.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataAccess\" />
     <Folder Include="Extensions\" />
     <Folder Include="Configuration\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 </Project>

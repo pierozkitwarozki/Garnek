@@ -1,7 +1,6 @@
-﻿using System;
-namespace Garnek.Model.DatabaseModels;
+﻿namespace Garnek.Model.DatabaseModels;
 
 public class Game : BaseModel
 {
-    public virtual ICollection<Team> Teams { get; init; }
+    public virtual ICollection<Team> Teams { get; set; }
 }
