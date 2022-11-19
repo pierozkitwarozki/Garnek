@@ -1,8 +1,12 @@
 ﻿using Garnek.Application.Repositories;
+using Garnek.Application.Services;
 using Garnek.Infrastructure.DataAccess;
 using Garnek.Model.DatabaseModels;
 using Garnek.Model.Dtos;
+using Garnek.Model.Dtos.Request;
+using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
 
 namespace Garnek.WebAPI.Controllers;
 
@@ -10,45 +14,25 @@ namespace Garnek.WebAPI.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    public UserController(IUserRepository userRepository)
+    private readonly IUserService _userService;
+
+    public UserController(IUserService userService)
     {
-        _userRepository = userRepository;
+        _userService = userService;
     }
 
-    private readonly DatabaseContext _context;
-    private readonly IUserRepository _userRepository;
-
-    [HttpGet("/{userId:guid}")]
-    public async Task<IActionResult> GetUser(Guid userId)
+    [HttpPost("InitializePlayers")]
+    public async Task<IActionResult> InitializePlayers([FromBody] InitializeGameRequest request)
     {
-        var user = await _userRepository.GetEntityByIdAsync(userId);
-
-        return user is not null ? Ok(user) : NotFound();
-    }
-
-    [HttpPost("add")]
-    public async Task<IActionResult> AddUser([FromBody]AddUserRequest request)
-    {
-        var user = new User {
-            Name = request.Name
-        };
-        var success = await _userRepository.AddEntityAsync(user);
-
-        return success ? Ok(user) : BadRequest();
-    }
-
-    [HttpPatch]
-    public async Task<IActionResult> UpdateUserName([FromQuery]UpdateUserRequest request)
-    {
-        var user = await _userRepository.GetEntityByIdAsync(request.UserId);
-
-        if (user is null) return NotFound();
-
-        user.Name = request.Name;
-
-        var updatedUser = await _userRepository.UpdateEntityAsync(user);
-
-        return updatedUser is not null ? Ok(user) : BadRequest();
+        try
+        {
+            var response = await _userService.InitializeGameWithUsersAsync(request);
+            return Ok(response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 }
 

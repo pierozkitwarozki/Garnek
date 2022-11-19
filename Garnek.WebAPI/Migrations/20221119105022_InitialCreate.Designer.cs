@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Garnek.WebAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20221117165427_InitalCreate")]
-    partial class InitalCreate
+    [Migration("20221119105022_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,6 +21,9 @@ namespace Garnek.WebAPI.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -94,9 +97,6 @@ namespace Garnek.WebAPI.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("GameId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -105,8 +105,6 @@ namespace Garnek.WebAPI.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GameId");
 
                     b.ToTable("Teams");
                 });
@@ -120,6 +118,9 @@ namespace Garnek.WebAPI.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("GameId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -128,6 +129,8 @@ namespace Garnek.WebAPI.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("GameId");
 
                     b.HasIndex("TeamId");
 
@@ -151,22 +154,19 @@ namespace Garnek.WebAPI.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Garnek.Model.DatabaseModels.Team", b =>
+            modelBuilder.Entity("Garnek.Model.DatabaseModels.User", b =>
                 {
                     b.HasOne("Garnek.Model.DatabaseModels.Game", "Game")
-                        .WithMany("Teams")
+                        .WithMany("Users")
                         .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.Navigation("Game");
-                });
-
-            modelBuilder.Entity("Garnek.Model.DatabaseModels.User", b =>
-                {
                     b.HasOne("Garnek.Model.DatabaseModels.Team", "Team")
                         .WithMany("Users")
                         .HasForeignKey("TeamId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Game");
 
                     b.Navigation("Team");
                 });
@@ -178,7 +178,7 @@ namespace Garnek.WebAPI.Migrations
 
             modelBuilder.Entity("Garnek.Model.DatabaseModels.Game", b =>
                 {
-                    b.Navigation("Teams");
+                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("Garnek.Model.DatabaseModels.Team", b =>

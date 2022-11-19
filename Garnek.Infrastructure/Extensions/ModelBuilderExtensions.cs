@@ -33,21 +33,17 @@ public static class ModelBuilderExtensions
             .HasForeignKey(x => x.TeamId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
-
-        return builder;
-    }
-
-    public static ModelBuilder BuildTeamModel(this ModelBuilder builder)
-    {
-        builder.Entity<Team>()
+        
+        builder.Entity<User>()
             .HasOne(x => x.Game)
-            .WithMany(x => x.Teams)
+            .WithMany(x => x.Users)
             .HasForeignKey(x => x.GameId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
 
         return builder;
     }
+    
 }
 
 

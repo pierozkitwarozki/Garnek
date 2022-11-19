@@ -2,5 +2,5 @@
 
 public class Game : BaseModel
 {
-    public virtual ICollection<Team> Teams { get; set; }
+    public virtual ICollection<User> Users { get; set; }
 }

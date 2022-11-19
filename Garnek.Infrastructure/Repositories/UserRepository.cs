@@ -11,14 +11,14 @@ public class UserRepository : BaseRepository<User>, IUserRepository
     {
     }
 
-    public override async Task<ICollection<User>> GetAllAsync()
+    public async Task<IEnumerable<User>> GetAllAsync()
     {
-        return await _context.Users.ToListAsync();
+        return await Context.Users.ToListAsync();
     }
 
     public async Task<IEnumerable<User>> GetUsersForTeamAsync(Guid teamId)
     {
-        return await _context
+        return await Context
             .Users
             .Where(user => user.TeamId == teamId)
             .ToListAsync();
