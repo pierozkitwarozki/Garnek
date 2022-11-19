@@ -21,4 +21,13 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Integration" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Garnek.Infrastructure\Garnek.Infrastructure.csproj" />
+    <ProjectReference Include="..\Garnek.Model\Garnek.Model.csproj" />
+  </ItemGroup>
+
 </Project>
