@@ -3,10 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Garnek.WebAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -102,6 +104,16 @@ namespace Garnek.WebAPI.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "CreatedAt", "Name" },
+                values: new object[,]
+                {
+                    { new Guid("0207d2d9-6161-4340-a1e1-742b16a4b0f9"), new DateTime(2022, 11, 20, 11, 53, 44, 287, DateTimeKind.Utc).AddTicks(8000), "Places" },
+                    { new Guid("12f45516-091e-48ed-92aa-641b216215a8"), new DateTime(2022, 11, 20, 11, 53, 44, 287, DateTimeKind.Utc).AddTicks(7940), "People" },
+                    { new Guid("7def094c-5c74-4be9-ae47-b6fefca5d02c"), new DateTime(2022, 11, 20, 11, 53, 44, 287, DateTimeKind.Utc).AddTicks(8010), "Things" }
                 });
 
             migrationBuilder.CreateIndex(

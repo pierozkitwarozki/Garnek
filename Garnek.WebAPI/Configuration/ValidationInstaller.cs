@@ -9,6 +9,7 @@ public static class ValidationInstaller
     public static IServiceCollection RegisterValidators(this IServiceCollection services)
     {
         services.AddScoped<IValidator<InitializeGameRequest>, InitializeGameRequestValidator>();
+        services.AddScoped<IValidator<AddPhrasesRequest>, AddPhrasesRequestValidator>();
 
         return services;
     }

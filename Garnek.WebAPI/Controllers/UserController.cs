@@ -20,7 +20,7 @@ public class UserController : ControllerBase
     {
         _userService = userService;
     }
-
+    
     [HttpPost("InitializePlayers")]
     public async Task<IActionResult> InitializePlayers([FromBody] InitializeGameRequest request)
     {

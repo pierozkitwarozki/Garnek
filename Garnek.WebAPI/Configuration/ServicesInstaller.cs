@@ -14,6 +14,7 @@ public static class ServicesInstaller
         services.AddSingleton<IHashids>(new Hashids(salt, alphabet: alphabet));
         services.AddSingleton<IHashidsService, HashidService>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ICategoryService, CategoryService>();
 
         return services;
     }

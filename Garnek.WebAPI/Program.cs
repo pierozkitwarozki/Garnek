@@ -1,4 +1,6 @@
-﻿using Garnek.WebAPI.Configuration;
+﻿using System.Reflection;
+using Garnek.WebAPI.Configuration;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,7 +8,20 @@ builder.Services.AddControllers();
 builder.Services.RegisterValidators();
 builder.Services.RegisterServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("Garnek.WebAPI", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Garnek.WebAPI",
+        Description = "An ASP.NET Core Web API for mobile game - Garnek",
+        Contact = new OpenApiContact
+        {
+            Name = "LinkedIn",
+            Url = new Uri("https://www.linkedin.com/in/bartlomiejpierog98/")
+        }
+    });
+});
 builder.Services
     .AddDatabaseConnection(builder.Configuration)
     .AddRepositories();

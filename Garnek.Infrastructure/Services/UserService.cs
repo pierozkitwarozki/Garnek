@@ -23,6 +23,7 @@ public class UserService : IUserService
         _hashidsService = hashidsService;
         _validator = validator;
     }
+    
     public async Task<InitializeGameResponse> InitializeGameWithUsersAsync(InitializeGameRequest request)
     {
         await _validator.ValidateAndThrowAsync(request);
@@ -52,6 +53,6 @@ public class UserService : IUserService
             GameId = gameId
         }).ToList();
 
-        await _userRepository.AddEnitiesAsync(createdUsers);
+        await _userRepository.AddEntitiesAsync(createdUsers);
     }
 }

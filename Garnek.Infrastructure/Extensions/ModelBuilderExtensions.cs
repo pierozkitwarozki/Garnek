@@ -43,6 +43,28 @@ public static class ModelBuilderExtensions
 
         return builder;
     }
+
+    public static ModelBuilder SeedCategories(this ModelBuilder builder)
+    {
+        builder.Entity<Category>()
+            .HasData(
+                new Category
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "People"
+                },
+                new Category
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Places"
+                },
+                new Category
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Things"
+                });
+        return builder;
+    }
     
 }
 

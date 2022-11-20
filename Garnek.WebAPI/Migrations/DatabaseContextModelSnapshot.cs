@@ -41,6 +41,26 @@ namespace Garnek.WebAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("12f45516-091e-48ed-92aa-641b216215a8"),
+                            CreatedAt = new DateTime(2022, 11, 20, 11, 53, 44, 287, DateTimeKind.Utc).AddTicks(7940),
+                            Name = "People"
+                        },
+                        new
+                        {
+                            Id = new Guid("0207d2d9-6161-4340-a1e1-742b16a4b0f9"),
+                            CreatedAt = new DateTime(2022, 11, 20, 11, 53, 44, 287, DateTimeKind.Utc).AddTicks(8000),
+                            Name = "Places"
+                        },
+                        new
+                        {
+                            Id = new Guid("7def094c-5c74-4be9-ae47-b6fefca5d02c"),
+                            CreatedAt = new DateTime(2022, 11, 20, 11, 53, 44, 287, DateTimeKind.Utc).AddTicks(8010),
+                            Name = "Things"
+                        });
                 });
 
             modelBuilder.Entity("Garnek.Model.DatabaseModels.Game", b =>

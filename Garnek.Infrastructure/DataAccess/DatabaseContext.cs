@@ -14,7 +14,8 @@ public class DatabaseContext : DbContext
 
         builder
             .BuildPhraseModel()
-            .BuildUserModel();
+            .BuildUserModel()
+            .SeedCategories();
     }
 
     public DbSet<Category> Categories { get; set; }

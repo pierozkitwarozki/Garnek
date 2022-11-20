@@ -19,7 +19,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
         return await Context.SaveChangesAsync() > 0;
     }
 
-    public async Task<bool> AddEnitiesAsync(IEnumerable<T> entities)
+    public async Task<bool> AddEntitiesAsync(IEnumerable<T> entities)
     {
         await Context.AddRangeAsync(entities);
         return await Context.SaveChangesAsync() > 0;

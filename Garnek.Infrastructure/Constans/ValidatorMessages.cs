@@ -19,4 +19,7 @@ public static class ValidatorMessages
     
     public static string NullOrEmpty(string fieldName) =>
         $"{fieldName} cannot be null/empty";
+    
+    public static string MustEqual(string fieldName, int number) =>
+        $"{fieldName} must equal {number}";
 }
