@@ -13,13 +13,13 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
         Context = context;
     }
 
-    public async Task<bool> AddEntityAsync(T entity)
+    public async Task<bool> AddAsync(T entity)
     {
         await Context.AddAsync<T>(entity);
         return await Context.SaveChangesAsync() > 0;
     }
 
-    public async Task<bool> AddEntitiesAsync(IEnumerable<T> entities)
+    public async Task<bool> AddRangeAsync(IEnumerable<T> entities)
     {
         await Context.AddRangeAsync(entities);
         return await Context.SaveChangesAsync() > 0;
@@ -43,7 +43,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
         return entities;
     }
 
-    public async Task<T> GetEntityByIdAsync(Guid id)
+    public async Task<T> GetByIdAsync(Guid id)
     {
         var entity = await Context.FindAsync<T>(id);
 

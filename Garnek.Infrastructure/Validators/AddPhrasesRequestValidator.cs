@@ -7,6 +7,8 @@ namespace Garnek.Infrastructure.Validators;
 public class AddPhrasesRequestValidator : AbstractValidator<AddPhrasesRequest>
 {
     public int CategoriesNumber { get; } = 3;
+    public int MinPhraseLength { get; } = 2;
+    public int MaxPhraseLength { get; } = 40;
 
     public AddPhrasesRequestValidator()
     {
@@ -37,11 +39,24 @@ public class AddPhrasesRequestValidator : AbstractValidator<AddPhrasesRequest>
             .WithMessage(ValidatorMessages.NullOrEmpty("Phrases"))
             .Must(DoDiffer)
             .WithMessage(ValidatorMessages.MustDiffer("Category phrases"));
+
+        RuleForEach(x => GetPhraseValues(x.Phrases))
+            .MinimumLength(MinPhraseLength)
+            .OverridePropertyName("Phrase")
+            .WithMessage(ValidatorMessages.MinLength("Phrase", MinPhraseLength))
+            .MaximumLength(MaxPhraseLength)
+            .OverridePropertyName("Phrase")
+            .WithMessage(ValidatorMessages.MaxLength("Phrase", MaxPhraseLength));
     }
 
-    private static bool DoDiffer(IDictionary<Guid, IEnumerable<string>> phrases)
+    private static bool DoDiffer(IDictionary<string, IEnumerable<string>> phrases)
     {
         var values = phrases.Values.SelectMany(x => x).ToList();
         return values.Distinct(StringComparer.CurrentCultureIgnoreCase).Count() == values.Count();
+    }
+
+    private static IEnumerable<string> GetPhraseValues(Dictionary<string, IEnumerable<string>> phrases)
+    {
+        return phrases.Values.SelectMany(phrase => phrase).ToList();
     }
 }

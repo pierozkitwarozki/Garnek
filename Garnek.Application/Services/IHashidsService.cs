@@ -4,6 +4,6 @@ namespace Garnek.Application.Services;
 public interface IHashidsService
 {
 	public string EncodeGuid(Guid id);
-	public Guid DecodeGuid(string hashid);
+	public Guid DecodeToGuid(string hashid);
 }
 

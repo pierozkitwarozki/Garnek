@@ -30,7 +30,7 @@ public class UserService : IUserService
 
         var game = new Game();
         
-        await _gameRepository.AddEntityAsync(game);
+        await _gameRepository.AddAsync(game);
         await AddUsersAsync(request.Names, game.Id);
         
         var encodedGameId = _hashidsService.EncodeGuid(game.Id);
@@ -53,6 +53,6 @@ public class UserService : IUserService
             GameId = gameId
         }).ToList();
 
-        await _userRepository.AddEntitiesAsync(createdUsers);
+        await _userRepository.AddRangeAsync(createdUsers);
     }
 }

@@ -12,7 +12,7 @@ public class HashidService : IHashidsService
         _hashid = hashid;
     }
 
-    public Guid DecodeGuid(string hashid)
+    public Guid DecodeToGuid(string hashid)
     {
         var hexString = _hashid.DecodeHex(hashid);
         var bytes = StringHexToByteArray(hexString);

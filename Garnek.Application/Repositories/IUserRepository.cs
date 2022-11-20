@@ -4,9 +4,10 @@ namespace Garnek.Application.Repositories;
 
 public interface IUserRepository : IBaseRepository<User>
 {
-    Task<IEnumerable<User>> GetUsersForTeamAsync(Guid teamId);
+    Task<IEnumerable<User?>> GetUsersForTeamAsync(Guid teamId);
 
-    Task<IEnumerable<User>> GetAllAsync();
+    Task<IEnumerable<User?>> GetAllAsync();
+    Task<User?> GetByNameAsync(string name);
 }
 
 

@@ -16,4 +16,11 @@ public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
         var categories = await Context.Categories.ToListAsync();
         return categories;
     }
+
+    public async Task<Category?> GetByNameAsync(string name)
+    {
+        return await Context.Categories
+            .FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
+
+    }
 }

@@ -7,16 +7,22 @@ namespace Garnek.Infrastructure.Repositories;
 
 public class UserRepository : BaseRepository<User>, IUserRepository
 {
-    public UserRepository(DatabaseContext context) : base(context)
-    {
-    }
+    public UserRepository(DatabaseContext context) : base(context) {}
 
-    public async Task<IEnumerable<User>> GetAllAsync()
+    public async Task<IEnumerable<User?>> GetAllAsync()
     {
         return await Context.Users.ToListAsync();
     }
 
-    public async Task<IEnumerable<User>> GetUsersForTeamAsync(Guid teamId)
+    public async Task<User?> GetByNameAsync(string name)
+    {
+        return await Context
+            .Users
+            .FirstOrDefaultAsync(x => 
+                x.Name.ToLower() == name.ToLower());
+    }
+
+    public async Task<IEnumerable<User?>> GetUsersForTeamAsync(Guid teamId)
     {
         return await Context
             .Users
