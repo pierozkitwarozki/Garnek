@@ -35,9 +35,9 @@ public class PhraseService : IPhraseService
     {
         await _validator.ValidateAndThrowAsync(request);
 
-        await ValidateGameIdAsync(request.GameId);
+        var decodedGameId = await ValidateGameIdAsync(request.GameId);
         
-        var user = await ValidateUserNameAsync(request.UserName);
+        var user = await ValidateUserNameAsync(decodedGameId, request.UserName);
 
         await AvoidDuplicateCreationAsync(user.Id);
 
@@ -86,9 +86,9 @@ public class PhraseService : IPhraseService
         if (game is null) throw new NotFoundException($"Game with id: {decodedGameId} not found.");
         return decodedGameId;
     }
-    private async Task<User> ValidateUserNameAsync(string userName)
+    private async Task<User> ValidateUserNameAsync(Guid gameId, string userName)
     {
-        var user = await _userRepository.GetByNameAsync(userName);
+        var user = await _userRepository.GetByNameAndGameIdAsync(gameId, userName);
         if (user is null) throw new NotFoundException($"User with name: {userName} not found.");
         return user;
     }

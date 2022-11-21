@@ -14,12 +14,13 @@ public class UserRepository : BaseRepository<User>, IUserRepository
         return await Context.Users.ToListAsync();
     }
 
-    public async Task<User?> GetByNameAsync(string name)
+    public async Task<User?> GetByNameAndGameIdAsync(Guid gameId, string name)
     {
         return await Context
             .Users
             .FirstOrDefaultAsync(x => 
-                x.Name.ToLower() == name.ToLower());
+                x.Name.ToLower() == name.ToLower()
+                && x.GameId == gameId);
     }
 
     public async Task<IEnumerable<User?>> GetUsersForTeamAsync(Guid teamId)
