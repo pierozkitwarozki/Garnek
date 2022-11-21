@@ -1,8 +1,10 @@
 using Garnek.Application.Services;
 using Garnek.Infrastructure.Services;
 using HashidsNet;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Garnek.WebAPI.Configuration;
+namespace Garnek.Infrastructure.Configuration;
 
 public static class ServicesInstaller
 {

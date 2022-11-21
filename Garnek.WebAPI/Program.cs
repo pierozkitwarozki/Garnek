@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Garnek.WebAPI.Configuration;
+using Garnek.Infrastructure.Configuration;
 using Garnek.WebAPI.Filters;
 using Microsoft.OpenApi.Models;
 

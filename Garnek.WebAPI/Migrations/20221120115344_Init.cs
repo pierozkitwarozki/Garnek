@@ -135,6 +135,23 @@ namespace Garnek.WebAPI.Migrations
                 name: "IX_Users_TeamId",
                 table: "Users",
                 column: "TeamId");
+
+            var sqlProcedure = """ 
+                CREATE PROCEDURE sp_DeleteOldRecords
+                AS
+                BEGIN
+                DELETE FROM Teams 
+                WHERE (DATEDIFF(HOUR, GETUTCDATE(), CreatedAt)) <= -6
+                DELETE FROM Phrases 
+                WHERE (DATEDIFF(HOUR, GETUTCDATE(), CreatedAt)) <= -6
+                DELETE FROM Users 
+                WHERE (DATEDIFF(HOUR, GETUTCDATE(), CreatedAt)) <= -6
+                DELETE FROM Games 
+                WHERE (DATEDIFF(HOUR, GETUTCDATE(), CreatedAt)) <= -6
+                END
+            """;
+
+            migrationBuilder.Sql(sqlProcedure);
         }
 
         /// <inheritdoc />

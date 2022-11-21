@@ -1,7 +1,9 @@
 ﻿using Garnek.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Garnek.WebAPI.Configuration;
+namespace Garnek.Infrastructure.Configuration;
 
 public static class DatabaseInstaller
 {
@@ -12,6 +14,15 @@ public static class DatabaseInstaller
 			.UseSqlServer(configuration
 			.GetConnectionString("SqlServer"),
 				x => x.MigrationsAssembly("Garnek.WebAPI")));
+
+		return services;
+	}
+	
+	public static IServiceCollection AddDatabaseWorkerConnection(this IServiceCollection services, IConfiguration configuration)
+	{
+		services.AddDbContextPool<DatabaseContext>(b => b
+			.UseSqlServer(configuration
+					.GetConnectionString("SqlServer")));
 
 		return services;
 	}

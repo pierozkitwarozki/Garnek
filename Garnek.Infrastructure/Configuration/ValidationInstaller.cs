@@ -1,8 +1,9 @@
 using FluentValidation;
 using Garnek.Infrastructure.Validators;
 using Garnek.Model.Dtos.Request;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Garnek.WebAPI.Configuration;
+namespace Garnek.Infrastructure.Configuration;
 
 public static class ValidationInstaller
 {

@@ -1,7 +1,8 @@
 ﻿using Garnek.Application.Repositories;
 using Garnek.Infrastructure.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Garnek.WebAPI.Configuration;
+namespace Garnek.Infrastructure.Configuration;
 
 public static class RepositoriesInstaller
 {
