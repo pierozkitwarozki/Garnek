@@ -24,15 +24,8 @@ public class UserController : ControllerBase
     [HttpPost("InitializePlayers")]
     public async Task<IActionResult> InitializePlayers([FromBody] InitializeGameRequest request)
     {
-        try
-        {
-            var response = await _userService.InitializeGameWithUsersAsync(request);
-            return Ok(response);
-        }
-        catch (Exception ex)
-        {
-            return BadRequest(ex.Message);
-        }
+        var response = await _userService.InitializeGameWithUsersAsync(request);
+        return Ok(response);
     }
 }
 

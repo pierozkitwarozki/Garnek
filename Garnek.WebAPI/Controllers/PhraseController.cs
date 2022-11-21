@@ -19,36 +19,14 @@ public class PhraseController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> AddPhrase(AddPhrasesRequest request)
     {
-        try
-        {
-            await _phraseService.AddPhrasesAsync(request);
-            return Ok();
-        }
-        catch (NotFoundException notFoundException)
-        {
-            return NotFound(notFoundException.Message);
-        }
-        catch (Exception exception)
-        {
-            return BadRequest(exception.Message);
-        }
+        await _phraseService.AddPhrasesAsync(request);
+        return Ok();
     }
     
     [HttpGet("/{gameId}")]
     public async Task<IActionResult> GetPhraseForGame(string gameId)
     {
-        try
-        {
-            var response = await _phraseService.GetPhrasesForGameAsync(gameId);
-            return Ok(response);
-        }
-        catch (NotFoundException notFoundException)
-        {
-            return NotFound(notFoundException.Message);
-        }
-        catch (Exception exception)
-        {
-            return BadRequest(exception.Message);
-        }
+        var response = await _phraseService.GetPhrasesForGameAsync(gameId);
+        return Ok(response);
     }
 }

@@ -1,10 +1,11 @@
 ﻿using System.Reflection;
 using Garnek.WebAPI.Configuration;
+using Garnek.WebAPI.Filters;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(opt => opt.Filters.Add<AsyncExceptionFilter>());
 builder.Services.RegisterValidators();
 builder.Services.RegisterServices(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
