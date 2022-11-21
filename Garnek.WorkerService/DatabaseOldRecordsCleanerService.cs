@@ -19,7 +19,7 @@ public class DatabaseOldRecordsCleanerService : BackgroundService
             using var scope = _serviceProvider.CreateScope();
             var services = scope.ServiceProvider;
             var context = services.GetService<DatabaseContext>();
-            var query = """
+            const string query = """
                 EXECUTE [dbo].[sp_DeleteOldRecords] 
             """;
             await context.Database.ExecuteSqlRawAsync(query, stoppingToken);

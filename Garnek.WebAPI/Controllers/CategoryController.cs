@@ -15,8 +15,8 @@ public class CategoryController : ControllerBase
         _categoryService = categoryService;
     }
 
-    [HttpGet("All")]
-    public async Task<IActionResult> GetCategories()
+    [HttpGet(nameof(All))]
+    public async Task<IActionResult> All()
     {
         var categories = await _categoryService.GetAllCategoriesAsync();
         return categories.Any() ? Ok(categories) : NotFound();

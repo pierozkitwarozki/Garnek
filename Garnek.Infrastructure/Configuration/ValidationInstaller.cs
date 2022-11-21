@@ -11,6 +11,7 @@ public static class ValidationInstaller
     {
         services.AddScoped<IValidator<InitializeGameRequest>, InitializeGameRequestValidator>();
         services.AddScoped<IValidator<AddPhrasesRequest>, AddPhrasesRequestValidator>();
+        services.AddScoped<IValidator<DrawTeamsRequest>, DrawTeamsRequestValidator>();
 
         return services;
     }

@@ -18,6 +18,7 @@ public static class ServicesInstaller
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IPhraseService, PhraseService>();
+        services.AddScoped<ITeamService, TeamService>();
 
         return services;
     }

@@ -25,7 +25,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
         return await Context.SaveChangesAsync() > 0;
     }
 
-    public async Task<T> UpdateEntityAsync(T entity)
+    public async Task<T> UpdateAsync(T entity)
     {
         Context.Update(entity);
 
@@ -34,7 +34,7 @@ public abstract class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
         return entity;
     }
 
-    public async Task<IEnumerable<T>> UpdateEntitiesAsync(IEnumerable<T> entities)
+    public async Task<IEnumerable<T>> UpdateRangeAsync(IEnumerable<T> entities)
     {
         Context.UpdateRange(entities);
 

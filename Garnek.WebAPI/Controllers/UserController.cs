@@ -21,7 +21,7 @@ public class UserController : ControllerBase
         _userService = userService;
     }
     
-    [HttpPost("InitializePlayers")]
+    [HttpPost(nameof(InitializePlayers))]
     public async Task<IActionResult> InitializePlayers([FromBody] InitializeGameRequest request)
     {
         var response = await _userService.InitializeGameWithUsersAsync(request);

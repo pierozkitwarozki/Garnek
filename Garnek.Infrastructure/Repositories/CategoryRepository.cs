@@ -21,6 +21,5 @@ public class CategoryRepository : BaseRepository<Category>, ICategoryRepository
     {
         return await Context.Categories
             .FirstOrDefaultAsync(x => x.Name.ToLower() == name.ToLower());
-
     }
 }

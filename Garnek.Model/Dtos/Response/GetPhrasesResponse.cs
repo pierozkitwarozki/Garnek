@@ -1,3 +1,3 @@
 namespace Garnek.Model.Dtos.Response;
 
-public record GetPhrasesResponse(string GameId, IEnumerable<string> Phrases);
+public record GetPhrasesResponse(Guid GameId, IEnumerable<string> Phrases);

@@ -9,10 +9,10 @@ public static class ValidatorMessages
         $"You must enter maximum {maxNumber} {collectionName}";
     
     public static string MinLength(string fieldName, int minLength) =>
-        $"{fieldName} must be at least {minLength} characters long";
+        $"{fieldName} must be at least {minLength} long";
     
     public static string MaxLength(string fieldName, int maxLength) =>
-        $"{fieldName} must be maximum {maxLength} characters long";
+        $"{fieldName} must be maximum {maxLength} long";
     
     public static string MustDiffer(string collectionName) =>
         $"{collectionName} values must be different";

@@ -6,5 +6,5 @@ namespace Garnek.Application.Services;
 public interface IPhraseService
 {
     Task AddPhrasesAsync(AddPhrasesRequest request);
-    Task<GetPhrasesResponse> GetPhrasesForGameAsync(string gameId);
+    Task<GetPhrasesResponse> GetPhrasesForGameAsync(Guid gameId);
 }

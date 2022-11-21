@@ -1,6 +1,5 @@
 using Garnek.Application.Services;
 using Garnek.Model.Dtos.Request;
-using Garnek.Model.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Garnek.WebAPI.Controllers;
@@ -23,8 +22,8 @@ public class PhraseController : ControllerBase
         return Ok();
     }
     
-    [HttpGet("/{gameId}")]
-    public async Task<IActionResult> GetPhraseForGame(string gameId)
+    [HttpGet("/{gameId:guid}")]
+    public async Task<IActionResult> GetPhrasesForGame(Guid gameId)
     {
         var response = await _phraseService.GetPhrasesForGameAsync(gameId);
         return Ok(response);

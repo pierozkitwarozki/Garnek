@@ -35,7 +35,7 @@ public class PhraseService : IPhraseService
     {
         await _validator.ValidateAndThrowAsync(request);
 
-        var decodedGameId = await ValidateGameIdAsync(request.GameId);
+        var decodedGameId = await ValidateEncodedGameIdAsync(request.GameId);
         
         var user = await ValidateUserNameAsync(decodedGameId, request.UserName);
 
@@ -59,7 +59,7 @@ public class PhraseService : IPhraseService
         }
     }
 
-    public async Task<GetPhrasesResponse> GetPhrasesForGameAsync(string gameId)
+    public async Task<GetPhrasesResponse> GetPhrasesForGameAsync(Guid gameId)
     {
         var decodedGameId = await ValidateGameIdAsync(gameId);
 
@@ -78,13 +78,18 @@ public class PhraseService : IPhraseService
             throw new InvalidOperationException("This user already entered phrases");
         }
     }
-
-    private async Task<Guid> ValidateGameIdAsync(string gameId)
+    private async Task<Guid> ValidateEncodedGameIdAsync(string encodedGameId)
     {
-        var decodedGameId = _hashidsService.DecodeToGuid(gameId);
-        var game = await _gameRepository.GetByIdAsync(decodedGameId);
-        if (game is null) throw new NotFoundException($"Game with id: {decodedGameId} not found.");
-        return decodedGameId;
+        var gameId = _hashidsService.DecodeToGuid(encodedGameId);
+        var game = await _gameRepository.GetByIdAsync(gameId);
+        if (game is null) throw new NotFoundException($"Game with id: {gameId} not found.");
+        return gameId;
+    }
+    private async Task<Guid> ValidateGameIdAsync(Guid gameId)
+    {
+        var game = await _gameRepository.GetByIdAsync(gameId);
+        if (game is null) throw new NotFoundException($"Game with id: {gameId} not found.");
+        return gameId;
     }
     private async Task<User> ValidateUserNameAsync(Guid gameId, string userName)
     {
