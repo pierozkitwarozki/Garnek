@@ -1,3 +1,3 @@
 namespace Garnek.Model.Dtos.Response;
 
-public record InitializeGameResponse(string GameId, IEnumerable<string> Urls);
+public record InitializeGameResponse(Guid GameId, IEnumerable<string> Urls);

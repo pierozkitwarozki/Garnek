@@ -36,7 +36,7 @@ public class UserService : IUserService
         var encodedGameId = _hashidsService.EncodeGuid(game.Id);
         var urls = GeneratePhraseCreationUrls(request.Names, encodedGameId);
 
-        return new InitializeGameResponse(encodedGameId, urls);
+        return new InitializeGameResponse(game.Id, urls);
     }
 
     private static IEnumerable<string> GeneratePhraseCreationUrls(IEnumerable<string> userNames, string encodedId)
