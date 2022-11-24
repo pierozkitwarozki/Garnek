@@ -13,7 +13,8 @@ public static class DatabaseInstaller
 			.UseLazyLoadingProxies()
 			.UseSqlServer(configuration
 			.GetConnectionString("SqlServer"),
-				x => x.MigrationsAssembly("Garnek.WebAPI")));
+				x => x.MigrationsAssembly("Garnek.WebAPI")
+					.EnableRetryOnFailure(6)));
 
 		return services;
 	}
@@ -22,7 +23,8 @@ public static class DatabaseInstaller
 	{
 		services.AddDbContextPool<DatabaseContext>(b => b
 			.UseSqlServer(configuration
-					.GetConnectionString("SqlServer")));
+					.GetConnectionString("SqlServer"),
+				x => x.EnableRetryOnFailure(6)));
 
 		return services;
 	}

@@ -1,0 +1,37 @@
+version: '3.8'
+
+networks:
+  net:
+    name: net
+
+services:
+  webapi:
+    build: 
+      context: .
+      dockerfile: ./docker/webapi/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    links:
+      - db
+  worker-service:
+    build: 
+      context: .
+      dockerfile: ./docker/worker-service/Dockerfile
+    depends_on:
+      - db
+      - webapi
+    links:
+      - db
+  db:
+    container_name: db
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - "${DOCKER_SQL_PORT:-1433}:1433"
+    expose:
+      - 1433
+    environment:
+      - MSSQL_SA_PASSWORD=DevelopmentGarnek123!
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Express

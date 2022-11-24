@@ -1,10 +1,12 @@
-﻿using System.Reflection;
-using Garnek.Infrastructure.Configuration;
+﻿using Garnek.Infrastructure.Configuration;
+using Garnek.Infrastructure.DataAccess;
 using Garnek.WebAPI.Filters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Console.WriteLine(builder.Configuration.GetConnectionString("SqlServer"));
 builder.Services.AddControllers(opt => opt.Filters.Add<AsyncExceptionFilter>());
 builder.Services.RegisterValidators();
 builder.Services.RegisterServices(builder.Configuration);
@@ -30,17 +32,20 @@ builder.Services
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
-
 app.MapControllers();
+
+await using var scope = app.Services.CreateAsyncScope();
+await using var db = scope.ServiceProvider.GetService<DatabaseContext>();
+if (db is not null) await db.Database.MigrateAsync();
 
 app.Run();
 
