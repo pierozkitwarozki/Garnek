@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: ':gameId/:userName', component: CreatePhraseComponent }];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {useHash : true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -17,7 +17,7 @@ RUN dotnet restore "Garnek.WebAPI/Garnek.WebAPI.csproj"
 COPY . .
 WORKDIR "/src/Garnek.WebAPI"
 RUN dotnet build "Garnek.WebAPI.csproj" -c Release -o /app/build
-
+ 
 FROM build AS publish
 RUN dotnet publish "Garnek.WebAPI.csproj" -c Release -o /app/publish
 
