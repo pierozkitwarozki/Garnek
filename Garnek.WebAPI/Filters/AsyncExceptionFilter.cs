@@ -17,6 +17,9 @@ public class AsyncExceptionFilter : IAsyncExceptionFilter
             case ValidationException validationException:
                 context.Result = new UnprocessableEntityObjectResult(validationException.Message);
                 return Task.CompletedTask;
+            case InvalidOperationException invalidOperationException:
+                context.Result = new UnprocessableEntityObjectResult(invalidOperationException.Message);
+                return Task.CompletedTask;
             default:
                 context.Result = new BadRequestObjectResult(context.Exception.Message);
                 return Task.CompletedTask;

@@ -28,4 +28,18 @@ public class PhraseController : ControllerBase
         var response = await _phraseService.GetPhrasesForGameAsync(gameId);
         return Ok(response);
     }
+
+    [HttpGet(nameof(CanBeAdded) + "/{gameId}/{userName}")]
+    public async Task<IActionResult> CanBeAdded(string gameId, string userName)
+    {
+        var response = await _phraseService.CheckIfPhrasesCanBeAddedAsync(gameId, userName);
+        return Ok(response);
+    }
+
+    [HttpGet(nameof(AllEntered) + "/{gameId:guid}")]
+    public async Task<IActionResult> AllEntered(Guid gameId)
+    {
+        var response = await _phraseService.AreAllPhrasesEnteredAsync(gameId);
+        return Ok(response);
+    }
 }

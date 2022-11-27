@@ -6,6 +6,7 @@ networks:
 
 services:
   webapi:
+    container_name: garnek-webapi
     build: 
       context: .
       dockerfile: ./docker/webapi/Dockerfile
@@ -19,6 +20,8 @@ services:
     build: 
       context: .
       dockerfile: ./docker/worker-service/Dockerfile
+    ports:
+      - "5001:5001"
     depends_on:
       - db
       - webapi

@@ -16,16 +16,23 @@ public class DatabaseOldRecordsCleanerService : BackgroundService
     {
         while (!stoppingToken.IsCancellationRequested)
         {
-            using var scope = _serviceProvider.CreateScope();
-            var services = scope.ServiceProvider;
-            var context = services.GetService<DatabaseContext>();
-            const string query = """
+            try
+            {
+                using var scope = _serviceProvider.CreateScope();
+                var services = scope.ServiceProvider;
+                var context = services.GetService<DatabaseContext>();
+                const string query = """
                 EXECUTE [dbo].[sp_DeleteOldRecords] 
             """;
-            await context.Database.ExecuteSqlRawAsync(query, stoppingToken);
-            await context.DisposeAsync();
-            const int hours = 1;
-            await Task.Delay(hours * 60 * 60 * 1000, stoppingToken);
+                await context.Database.ExecuteSqlRawAsync(query, stoppingToken);
+                await context.DisposeAsync();
+                const int hours = 1;
+                await Task.Delay(hours * 60 * 60 * 1000, stoppingToken);
+            }
+            catch (Exception ex)
+            {
+                await Task.Delay(10000, stoppingToken);
+            }
         }
     }
 }

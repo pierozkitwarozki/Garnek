@@ -1,12 +1,6 @@
-﻿using Garnek.Application.Repositories;
-using Garnek.Application.Services;
-using Garnek.Infrastructure.DataAccess;
-using Garnek.Model.DatabaseModels;
-using Garnek.Model.Dtos;
+﻿using Garnek.Application.Services;
 using Garnek.Model.Dtos.Request;
-using HashidsNet;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace Garnek.WebAPI.Controllers;
 

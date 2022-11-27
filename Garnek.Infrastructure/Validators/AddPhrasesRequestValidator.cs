@@ -9,6 +9,7 @@ public class AddPhrasesRequestValidator : AbstractValidator<AddPhrasesRequest>
     public int CategoriesNumber { get; } = 3;
     public int MinPhraseLength { get; } = 2;
     public int MaxPhraseLength { get; } = 40;
+    public int ExactNumberOfPhrasesPerCategory { get; } = 3;
 
     public AddPhrasesRequestValidator()
     {
@@ -47,6 +48,11 @@ public class AddPhrasesRequestValidator : AbstractValidator<AddPhrasesRequest>
             .MaximumLength(MaxPhraseLength)
             .OverridePropertyName("Phrase")
             .WithMessage(ValidatorMessages.MaxLength("Phrase", MaxPhraseLength));
+
+        RuleForEach(x => x.Phrases)
+            .Must(HaveExactNumberOfPhrasesPerCategory)
+            .OverridePropertyName("Phrase")
+            .WithMessage(ValidatorMessages.ExactLength("Phrase", ExactNumberOfPhrasesPerCategory));
     }
 
     private static bool DoDiffer(IDictionary<string, IEnumerable<string>> phrases)
@@ -55,8 +61,13 @@ public class AddPhrasesRequestValidator : AbstractValidator<AddPhrasesRequest>
         return values.Distinct(StringComparer.CurrentCultureIgnoreCase).Count() == values.Count();
     }
 
-    private static IEnumerable<string> GetPhraseValues(Dictionary<string, IEnumerable<string>> phrases)
+    private static IEnumerable<string> GetPhraseValues(IDictionary<string, IEnumerable<string>> phrases)
     {
         return phrases.Values.SelectMany(phrase => phrase).ToList();
+    }
+
+    private bool HaveExactNumberOfPhrasesPerCategory(KeyValuePair<string, IEnumerable<string>> phrases)
+    {
+        return phrases.Value.Count() == ExactNumberOfPhrasesPerCategory;
     }
 }

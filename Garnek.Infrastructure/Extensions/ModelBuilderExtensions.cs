@@ -33,7 +33,7 @@ public static class ModelBuilderExtensions
             .HasForeignKey(x => x.TeamId)
             .IsRequired(false)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
         builder.Entity<User>()
             .HasOne(x => x.Game)
             .WithMany(x => x.Users)
@@ -51,17 +51,20 @@ public static class ModelBuilderExtensions
                 new Category
                 {
                     Id = Guid.NewGuid(),
-                    Name = "People"
+                    Name = "People",
+                    PolishLabel = "Osoby 💆🏼‍"
                 },
                 new Category
                 {
                     Id = Guid.NewGuid(),
-                    Name = "Places"
+                    Name = "Places",
+                    PolishLabel = "Miejsca 🌁"
                 },
                 new Category
                 {
                     Id = Guid.NewGuid(),
-                    Name = "Things"
+                    Name = "Things",
+                    PolishLabel = "Rzeczy 🎸"
                 });
         return builder;
     }

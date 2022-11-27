@@ -1,12 +1,13 @@
 ﻿using Garnek.Infrastructure.Configuration;
 using Garnek.Infrastructure.DataAccess;
 using Garnek.WebAPI.Filters;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Console.WriteLine(builder.Configuration.GetConnectionString("SqlServer"));
+
 builder.Services.AddControllers(opt => opt.Filters.Add<AsyncExceptionFilter>());
 builder.Services.RegisterValidators();
 builder.Services.RegisterServices(builder.Configuration);
@@ -28,6 +29,11 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services
     .AddDatabaseConnection(builder.Configuration)
     .AddRepositories();
+builder.Services.AddCors(x => 
+    x.AddPolicy("defaultPolicy", x 
+        => x.AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowAnyOrigin()));
 
 var app = builder.Build();
 
@@ -39,7 +45,7 @@ var app = builder.Build();
 //}
 
 //app.UseHttpsRedirection();
-
+app.UseCors("defaultPolicy");
 app.UseAuthorization();
 app.MapControllers();
 

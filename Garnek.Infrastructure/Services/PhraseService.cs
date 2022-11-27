@@ -1,6 +1,7 @@
 using FluentValidation;
 using Garnek.Application.Repositories;
 using Garnek.Application.Services;
+using Garnek.Infrastructure.Validators;
 using Garnek.Model.DatabaseModels;
 using Garnek.Model.Dtos.Request;
 using Garnek.Model.Dtos.Response;
@@ -59,11 +60,37 @@ public class PhraseService : IPhraseService
         }
     }
 
+    public async Task<bool> CheckIfPhrasesCanBeAddedAsync(string encodedGameId, string userName)
+    {
+        var decodedGameId = await ValidateEncodedGameIdAsync(encodedGameId);
+        
+        var user = await ValidateUserNameAsync(decodedGameId, userName);
+
+        await AvoidDuplicateCreationAsync(user.Id);
+
+        return true;
+    }
+
+    public async Task<bool> AreAllPhrasesEnteredAsync(Guid gameId)
+    {
+        var game = await ValidateGameIdAsync(gameId);
+        
+        var castedValidator = _validator as AddPhrasesRequestValidator;
+
+        var phrasesCount = castedValidator?.CategoriesNumber * castedValidator?.ExactNumberOfPhrasesPerCategory;
+
+        var areAllPhrasesEntered = game.Users
+            .All(x =>
+                x.Phrases.Count() == phrasesCount);
+
+        return areAllPhrasesEntered;
+    }
+
     public async Task<GetPhrasesResponse> GetPhrasesForGameAsync(Guid gameId)
     {
-        var decodedGameId = await ValidateGameIdAsync(gameId);
+        await ValidateGameIdAsync(gameId);
 
-        var phrases = await _phraseRepository.GetByGameIdAsync(decodedGameId);
+        var phrases = await _phraseRepository.GetByGameIdAsync(gameId);
         var phraseNames = phrases.Select(x => x.Name);
 
         return new GetPhrasesResponse(gameId, phraseNames);
@@ -85,11 +112,11 @@ public class PhraseService : IPhraseService
         if (game is null) throw new NotFoundException($"Game with id: {gameId} not found.");
         return gameId;
     }
-    private async Task<Guid> ValidateGameIdAsync(Guid gameId)
+    private async Task<Game> ValidateGameIdAsync(Guid gameId)
     {
         var game = await _gameRepository.GetByIdAsync(gameId);
         if (game is null) throw new NotFoundException($"Game with id: {gameId} not found.");
-        return gameId;
+        return game;
     }
     private async Task<User> ValidateUserNameAsync(Guid gameId, string userName)
     {

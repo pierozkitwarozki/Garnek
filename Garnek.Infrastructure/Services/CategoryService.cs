@@ -16,7 +16,7 @@ public class CategoryService : ICategoryService
     public async Task<IEnumerable<CategoryResponse>> GetAllCategoriesAsync()
     {
         var categories = await _categoryRepository.GetAllAsync();
-        var mappedCategories = categories.Select(x => new CategoryResponse(x.Id, x.Name));
+        var mappedCategories = categories.Select(x => new CategoryResponse(x.Id, x.Name, x.PolishLabel));
         return mappedCategories;
     }
 }

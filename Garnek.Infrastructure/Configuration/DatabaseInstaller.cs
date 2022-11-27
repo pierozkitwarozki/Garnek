@@ -14,7 +14,7 @@ public static class DatabaseInstaller
 			.UseSqlServer(configuration
 			.GetConnectionString("SqlServer"),
 				x => x.MigrationsAssembly("Garnek.WebAPI")
-					.EnableRetryOnFailure(6)));
+					.EnableRetryOnFailure(6, TimeSpan.FromSeconds(10), null)));
 
 		return services;
 	}
@@ -24,7 +24,7 @@ public static class DatabaseInstaller
 		services.AddDbContextPool<DatabaseContext>(b => b
 			.UseSqlServer(configuration
 					.GetConnectionString("SqlServer"),
-				x => x.EnableRetryOnFailure(6)));
+				x => x.EnableRetryOnFailure(6, TimeSpan.FromSeconds(10), null)));
 
 		return services;
 	}

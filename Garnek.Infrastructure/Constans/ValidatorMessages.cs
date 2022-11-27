@@ -10,6 +10,9 @@ public static class ValidatorMessages
     
     public static string MinLength(string fieldName, int minLength) =>
         $"{fieldName} must be at least {minLength} long";
+
+    public static string ExactLength(string fieldName, int exactLength) =>
+        $"{fieldName} must be at exact {exactLength} long";
     
     public static string MaxLength(string fieldName, int maxLength) =>
         $"{fieldName} must be maximum {maxLength} long";

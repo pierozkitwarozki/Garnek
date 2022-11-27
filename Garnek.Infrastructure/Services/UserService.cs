@@ -4,6 +4,7 @@ using Garnek.Application.Services;
 using Garnek.Model.DatabaseModels;
 using Garnek.Model.Dtos.Request;
 using Garnek.Model.Dtos.Response;
+using Garnek.Model.Exceptions;
 
 namespace Garnek.Infrastructure.Services;
 

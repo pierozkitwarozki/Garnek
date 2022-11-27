@@ -1,0 +1,76 @@
+
+<mat-card *ngIf="message.length > 0">
+  <mat-card-subtitle>
+    {{ message }}
+  </mat-card-subtitle>
+</mat-card>
+
+<div *ngIf="message.length === 0 && categories.length === 3">
+  <div class="container" style="margin-top: 5px;">
+    <h3>Witaj, {{ userName }} 👋🏼</h3>
+  </div>
+  <form [formGroup]="phrasesFormGroup">
+    <div *ngFor="let category of categories; index as i">
+      <div class="container">
+        <!--Kategoria 1-->
+        <mat-form-field class="example-full-width">
+          <mat-label>Hasło pierwsze, z kategorii: <strong>{{ category.polishLabel }}</strong></mat-label>
+          <input type="text" matInput formControlName="firstPhrase{{i}}c" [errorStateMatcher]="matcher"
+                placeholder="...">
+          <mat-error *ngIf="phrasesFormGroup.get('firstPhrase' + i + 'c').hasError('required')">
+            Hasło jest <strong>wymagane</strong> 
+          </mat-error>
+          <mat-error *ngIf="phrasesFormGroup.get('firstPhrase' + i + 'c').hasError('minlength')">
+            Hasło musi mieć  <strong>minimum 2 znaki</strong>
+          </mat-error>
+          <mat-error *ngIf="phrasesFormGroup.get('firstPhrase' + i + 'c').hasError('maxlength')">
+            Hasło musi mieć  <strong>maksymalnie 40 znaków</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      
+      <div class="container">
+        <!--Kategoria 2-->
+      <mat-form-field class="example-full-width">
+        <mat-label>Hasło drugie, z kategorii: <strong>{{ category.polishLabel }}</strong></mat-label>
+        <input type="text" matInput formControlName="secondPhrase{{i}}c" [errorStateMatcher]="matcher"
+               placeholder="...">
+        <mat-error *ngIf="phrasesFormGroup.get('secondPhrase' + i + 'c').hasError('required')">
+          Hasło jest <strong>wymagane</strong> 
+        </mat-error>
+        <mat-error *ngIf="phrasesFormGroup.get('secondPhrase' + i + 'c').hasError('minlength')">
+          Hasło musi mieć  <strong>minimum 2 znaki</strong>
+        </mat-error>
+        <mat-error *ngIf="phrasesFormGroup.get('secondPhrase' + i + 'c').hasError('maxlength')">
+          Hasło musi mieć  <strong>maksymalnie 40 znaków</strong>
+        </mat-error>
+      </mat-form-field>
+      </div>
+      
+      <!--Kategoria 3-->
+      <div class="container">
+        <mat-form-field class="example-full-width">
+          <mat-label>Hasło trzecie, z kategorii: <strong>{{ category.polishLabel }}</strong></mat-label>
+          <input type="text" matInput formControlName="thirdPhrase{{i}}c" [errorStateMatcher]="matcher"
+                 placeholder="...">
+          <mat-error *ngIf="phrasesFormGroup.get('thirdPhrase' + i + 'c').hasError('required')">
+            Hasło jest <strong>wymagane</strong> 
+          </mat-error>
+          <mat-error *ngIf="phrasesFormGroup.get('thirdPhrase' + i + 'c').hasError('minlength')">
+            Hasło musi mieć  <strong>minimum 2 znaki</strong>
+          </mat-error>
+          <mat-error *ngIf="phrasesFormGroup.get('thirdPhrase' + + i + 'c').hasError('maxlength')">
+            Hasło musi mieć  <strong>maksymalnie 40 znaków</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div class="container">
+      <button mat-raised-button color="primary" [disabled]="phrasesFormGroup.invalid" (click)="sendPhrases()">Dodaj hasła! 🤠</button>
+    </div>
+ 
+  </form>
+</div>
+
+<router-outlet></router-outlet>

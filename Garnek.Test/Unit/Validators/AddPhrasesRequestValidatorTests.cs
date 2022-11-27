@@ -207,4 +207,25 @@ public class AddPhrasesRequestValidatorTests
         Assert.False(result.IsValid);
         Assert.True(result.Errors.Any(x => x.ErrorMessage == message));
     }
+    
+    [Fact]
+    public async Task Validate_ShouldNotBeValid_WrongNumberOfPhrasesPerCategory()
+    {
+        // Arrange
+        var phrases = new Dictionary<string, IEnumerable<string>>
+        {
+            { _categoryIds[0], new[] { "Phrase1", "Phrase2", "Phrase3" } },
+            { _categoryIds[1], new[] { "Phrase4", "Phrase5", "Phrase6" } },
+            { _categoryIds[2], new[] { "Phrase7", "Phrase8", "Phrase9", "Phrase10" } }
+        };
+        var request = new AddPhrasesRequest(GameId, UserName, phrases);
+        var message = ValidatorMessages.ExactLength("Phrase", _validator.ExactNumberOfPhrasesPerCategory);
+
+        // Act
+        var result = await _validator.ValidateAsync(request);
+
+        // Assert
+        Assert.False(result.IsValid);
+        Assert.True(result.Errors.Any(x => x.ErrorMessage == message));
+    }
 }
