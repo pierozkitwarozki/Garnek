@@ -1,12 +1,10 @@
 ﻿using Garnek.Infrastructure.Configuration;
 using Garnek.Infrastructure.DataAccess;
 using Garnek.WebAPI.Filters;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-
 
 builder.Services.AddControllers(opt => opt.Filters.Add<AsyncExceptionFilter>());
 builder.Services.RegisterValidators();
@@ -29,6 +27,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services
     .AddDatabaseConnection(builder.Configuration)
     .AddRepositories();
+
 builder.Services.AddCors(x => 
     x.AddPolicy("defaultPolicy", x 
         => x.AllowAnyMethod()

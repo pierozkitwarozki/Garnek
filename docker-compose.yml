@@ -1,12 +1,8 @@
 version: '3.8'
 
-networks:
-  net:
-    name: net
-
 services:
   webapi:
-    container_name: garnek-webapi
+    container_name: webapi
     build: 
       context: .
       dockerfile: ./docker/webapi/Dockerfile
@@ -45,5 +41,4 @@ services:
       dockerfile: ../docker/frontend/Dockerfile
     ports:
       - '9000:80'
-    depends_on:
-      - webapi
+    
