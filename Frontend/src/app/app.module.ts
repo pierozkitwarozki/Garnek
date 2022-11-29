@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { SnackbarService } from './snackbar.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { GarnekWebapiService } from './services/garnekwebapi.service';
 
 @NgModule({
   declarations: [	
@@ -24,10 +26,12 @@ import { SnackbarService } from './snackbar.service';
     MatCardModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressBarModule
   ],
   providers: [
-    SnackbarService
+    SnackbarService,
+    GarnekWebapiService
   ],
   bootstrap: [CreatePhraseComponent]
 })

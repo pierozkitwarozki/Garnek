@@ -68,7 +68,7 @@
     </div>
     <div class="container">
       <button mat-raised-button color="primary" 
-        [disabled]="phrasesFormGroup.invalid || lockButton" 
+        [disabled]="phrasesFormGroup.invalid || (garnekWebapiService.requestCount$ | async) > 0" 
         (click)="sendPhrases()">
         Dodaj hasła! 🤠
       </button>
@@ -77,4 +77,5 @@
   </form>
 </div>
 
+<mat-progress-bar class="footer" *ngIf="(garnekWebapiService.requestCount$ | async) > 0" mode="indeterminate"></mat-progress-bar>
 <router-outlet></router-outlet>

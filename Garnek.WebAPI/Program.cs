@@ -37,6 +37,13 @@ builder.Services.AddCors(x =>
             .AllowAnyHeader()
             .AllowAnyOrigin()));
 
+builder.Services.AddCors(x => 
+    x.AddPolicy("prodPolicy", x 
+        => x.AllowAnyMethod()
+            .AllowAnyHeader()
+            .WithOrigins("https://garnek.azurewebsites.net", 
+                "http://garnek.azurewebsites.net")));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,8 +53,8 @@ var app = builder.Build();
     app.UseSwaggerUI();
 //}
 
+app.UseCors(app.Environment.IsDevelopment() ? "defaultPolicy" : "prodPolicy");
 //app.UseHttpsRedirection();
-app.UseCors("defaultPolicy");
 app.UseAuthorization();
 app.MapControllers();
 

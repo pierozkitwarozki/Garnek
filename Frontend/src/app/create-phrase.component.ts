@@ -8,13 +8,13 @@ import { environment } from 'src/environments/environment';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { SnackbarService } from './snackbar.service';
+import { GarnekWebapiService } from './services/garnekwebapi.service';
 @Component({
   selector: 'app-root',
   templateUrl: './create-phrase.component.html',
   styleUrls: ['./create-phrase.component.scss']
 })
 export class CreatePhraseComponent implements OnInit, OnDestroy {
-  private dataExistEndpoint = environment.baseUrl + 'Phrase/CanBeAdded/'
   private routeParamsSubscription: Subscription;
   public matcher = new MyErrorStateMatcher();
   public gameId: string;
@@ -25,8 +25,8 @@ export class CreatePhraseComponent implements OnInit, OnDestroy {
   public lockButton: boolean = false;
 
   constructor(
+    public garnekWebapiService: GarnekWebapiService,
     private router: ActivatedRoute, 
-    private httpClient: HttpClient,
     private snackBarService: SnackbarService,
     private formBuilder: FormBuilder) {
   }
@@ -46,8 +46,7 @@ export class CreatePhraseComponent implements OnInit, OnDestroy {
   }
 
   private getCategories(): void {
-    this.httpClient.get(environment.baseUrl + 'Category/All')
-      .pipe(retry(2))
+    this.garnekWebapiService.getCategories()
       .subscribe((response: any[]) => {
         if (response) {
           this.categories = response.map(x => 
@@ -59,10 +58,7 @@ export class CreatePhraseComponent implements OnInit, OnDestroy {
   }
 
   private checkIfPhrasesCanBeAdded(): void {
-    const endpoint = 
-      this.dataExistEndpoint + this.gameId + '/' + this.userName;
-    this.httpClient.get(endpoint).pipe(
-      retry(2))
+    this.garnekWebapiService.checkIfPhrasesCanBeAdded(this.gameId, this.userName)
       .subscribe((response: number): void => {
         this.getCategories();
       }, (error: HttpErrorResponse): void => {
@@ -122,10 +118,7 @@ export class CreatePhraseComponent implements OnInit, OnDestroy {
       this.phrasesFormGroup.get('thirdPhrase2c').value
     ];
     
-    const endpoint = 
-      this.dataExistEndpoint + this.gameId + '/' + this.userName;
-    this.httpClient.get(endpoint).pipe(
-      retry(2))
+    this.garnekWebapiService.checkIfPhrasesCanBeAdded(this.gameId, this.userName)
       .subscribe((response: number): void => {
         this.postPhrasesRequest(body);
       }, (error: HttpErrorResponse): void => {
@@ -149,9 +142,7 @@ export class CreatePhraseComponent implements OnInit, OnDestroy {
   }
 
   private postPhrasesRequest(body: any): void {
-    this.httpClient
-      .post(environment.baseUrl + 'Phrase', body, { headers: { 'Content-Type': 'application/json'}})
-      .pipe(retry(2))
+    this.garnekWebapiService.addPhrases(body)
       .subscribe((): void => {
         this.snackBarService.openSnackBar('Hasła zostały dodane. Mozesz zamknac strone. 😍');
         this.message = 'Wprowadziłeś wszystkie hasła. Poczekaj na innych graczy i rozpocznij grę. 🥳';
