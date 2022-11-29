@@ -122,6 +122,33 @@ export class CreatePhraseComponent implements OnInit, OnDestroy {
       this.phrasesFormGroup.get('thirdPhrase2c').value
     ];
     
+    const endpoint = 
+      this.dataExistEndpoint + this.gameId + '/' + this.userName;
+    this.httpClient.get(endpoint).pipe(
+      retry(2))
+      .subscribe((response: number): void => {
+        this.postPhrasesRequest(body);
+      }, (error: HttpErrorResponse): void => {
+        this.lockButton = false;
+
+        if (error.status === 404) {
+          this.message = "Wprowadzono błędną nazwę gracza lub identyfikator gry. Sprawdź poprawność danych i spróbuj ponownie. 😤";
+          return;
+        }
+
+        if (error.status === 422) {
+          this.message = "Wprowadziłeś wszystkie hasła. Poczekaj na innych graczy i rozpocznij grę. 🥳";
+          return;
+        }
+
+        this.message = "Wystąpił błąd z serwerem. 😤";
+        this.snackBarService.openSnackBar(this.message);
+    })
+
+    
+  }
+
+  private postPhrasesRequest(body: any): void {
     this.httpClient
       .post(environment.baseUrl + 'Phrase', body, { headers: { 'Content-Type': 'application/json'}})
       .pipe(retry(2))
