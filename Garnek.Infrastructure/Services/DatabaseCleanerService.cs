@@ -22,16 +22,30 @@ public class DatabaseCleanerService : BackgroundService
                 using var scope = _serviceProvider.CreateScope();
                 var services = scope.ServiceProvider;
                 var context = services.GetService<DatabaseContext>();
-                
-                var teams = context?.Teams.Where(x => x.CreatedAt < DateTime.UtcNow.AddHours(-3));
-                var users = teams.SelectMany(x => x.Users).ToList();
-                var phrases = users.SelectMany(x => x.Phrases).ToList();
-                var games = users.Select(x => x.Game).ToList();
 
-                if (teams != null) context?.RemoveRange(teams);
-                if (phrases != null) context?.RemoveRange(phrases);
-                if (users != null) context?.RemoveRange(users);
-                if (games != null) context?.RemoveRange(games);
+                if (context is null)
+                {
+                    await Task.Delay(30000, stoppingToken);
+                    continue;
+                };
+
+                var teams = await context.Teams
+                    .Where(x => x.CreatedAt <= DateTime.UtcNow.AddHours(-2))
+                    .ToListAsync(stoppingToken);
+                var users = teams
+                    .SelectMany(x => x.Users)
+                    .ToList();
+                var phrases = users
+                    .SelectMany(x => x.Phrases)
+                    .ToList();
+                var games = users
+                    .Select(x => x.Game)
+                    .ToList();
+                
+                context.RemoveRange(teams);
+                context.RemoveRange(phrases);
+                context.RemoveRange(users);
+                context.RemoveRange(games);
 
                 await context.SaveChangesAsync(stoppingToken);
                 await context.DisposeAsync();

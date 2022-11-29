@@ -15,7 +15,6 @@ import { SnackbarService } from './snackbar.service';
 })
 export class CreatePhraseComponent implements OnInit, OnDestroy {
   private dataExistEndpoint = environment.baseUrl + 'Phrase/CanBeAdded/'
-
   private routeParamsSubscription: Subscription;
   public matcher = new MyErrorStateMatcher();
   public gameId: string;
@@ -23,6 +22,7 @@ export class CreatePhraseComponent implements OnInit, OnDestroy {
   public message: string = '';
   public phrasesFormGroup: FormGroup;
   public categories: any[] = [];
+  public lockButton: boolean = false;
 
   constructor(
     private router: ActivatedRoute, 
@@ -98,6 +98,8 @@ export class CreatePhraseComponent implements OnInit, OnDestroy {
   }
 
   public sendPhrases(): void {
+    this.lockButton = true;
+
     let body = {
       gameId: this.gameId,
       userName: this.userName,
@@ -127,6 +129,7 @@ export class CreatePhraseComponent implements OnInit, OnDestroy {
         this.snackBarService.openSnackBar('Hasła zostały dodane. Mozesz zamknac strone. 😍');
         this.message = 'Wprowadziłeś wszystkie hasła. Poczekaj na innych graczy i rozpocznij grę. 🥳';
       }, (error: HttpErrorResponse): void => {
+        this.lockButton = false;
         this.snackBarService.openSnackBar('Oooops.. Coś poszło nie tak. Sprawdź poprawność haseł i spróbuj ponownie. 😤');
       })
   }

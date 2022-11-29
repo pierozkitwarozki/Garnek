@@ -15,7 +15,7 @@
         <!--Kategoria 1-->
         <mat-form-field class="example-full-width">
           <mat-label>Hasło pierwsze, z kategorii: <strong>{{ category.polishLabel }}</strong></mat-label>
-          <input type="text" matInput formControlName="firstPhrase{{i}}c" [errorStateMatcher]="matcher"
+          <input type="text" matInput [maxlength]="40" formControlName="firstPhrase{{i}}c" [errorStateMatcher]="matcher"
                 placeholder="...">
           <mat-error *ngIf="phrasesFormGroup.get('firstPhrase' + i + 'c').hasError('required')">
             Hasło jest <strong>wymagane</strong> 
@@ -33,7 +33,7 @@
         <!--Kategoria 2-->
       <mat-form-field class="example-full-width">
         <mat-label>Hasło drugie, z kategorii: <strong>{{ category.polishLabel }}</strong></mat-label>
-        <input type="text" matInput formControlName="secondPhrase{{i}}c" [errorStateMatcher]="matcher"
+        <input type="text" matInput [maxlength]="40" formControlName="secondPhrase{{i}}c" [errorStateMatcher]="matcher"
                placeholder="...">
         <mat-error *ngIf="phrasesFormGroup.get('secondPhrase' + i + 'c').hasError('required')">
           Hasło jest <strong>wymagane</strong> 
@@ -51,7 +51,7 @@
       <div class="container">
         <mat-form-field class="example-full-width">
           <mat-label>Hasło trzecie, z kategorii: <strong>{{ category.polishLabel }}</strong></mat-label>
-          <input type="text" matInput formControlName="thirdPhrase{{i}}c" [errorStateMatcher]="matcher"
+          <input type="text" matInput [maxlength]="40" formControlName="thirdPhrase{{i}}c" [errorStateMatcher]="matcher"
                  placeholder="...">
           <mat-error *ngIf="phrasesFormGroup.get('thirdPhrase' + i + 'c').hasError('required')">
             Hasło jest <strong>wymagane</strong> 
@@ -67,7 +67,11 @@
 
     </div>
     <div class="container">
-      <button mat-raised-button color="primary" [disabled]="phrasesFormGroup.invalid" (click)="sendPhrases()">Dodaj hasła! 🤠</button>
+      <button mat-raised-button color="primary" 
+        [disabled]="phrasesFormGroup.invalid || lockButton" 
+        (click)="sendPhrases()">
+        Dodaj hasła! 🤠
+      </button>
     </div>
  
   </form>
