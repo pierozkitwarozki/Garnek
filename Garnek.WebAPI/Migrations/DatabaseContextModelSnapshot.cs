@@ -3,7 +3,6 @@ using System;
 using Garnek.Infrastructure.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -20,27 +19,24 @@ namespace Garnek.WebAPI.Migrations
                 .HasAnnotation("ProductVersion", "7.0.0")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+                .HasAnnotation("Proxies:LazyLoading", true);
 
             modelBuilder.Entity("Garnek.Model.DatabaseModels.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PolishLabel")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -49,22 +45,22 @@ namespace Garnek.WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e8e14638-59c8-46d8-8aa7-e3f0aa7b86f6"),
-                            CreatedAt = new DateTime(2022, 11, 27, 14, 16, 33, 586, DateTimeKind.Utc).AddTicks(5630),
+                            Id = new Guid("e815b8a1-697a-4122-bf97-7b35e4d1bd37"),
+                            CreatedAt = new DateTime(2022, 11, 28, 20, 1, 36, 908, DateTimeKind.Utc).AddTicks(3070),
                             Name = "People",
                             PolishLabel = "Osoby 💆🏼‍"
                         },
                         new
                         {
-                            Id = new Guid("f64206c8-4dcb-4415-89cd-367571420fb5"),
-                            CreatedAt = new DateTime(2022, 11, 27, 14, 16, 33, 586, DateTimeKind.Utc).AddTicks(5720),
+                            Id = new Guid("50c55078-aa05-482f-ae18-e93680582fd0"),
+                            CreatedAt = new DateTime(2022, 11, 28, 20, 1, 36, 908, DateTimeKind.Utc).AddTicks(3140),
                             Name = "Places",
                             PolishLabel = "Miejsca 🌁"
                         },
                         new
                         {
-                            Id = new Guid("0416457b-a013-491b-b38c-57b6699d4990"),
-                            CreatedAt = new DateTime(2022, 11, 27, 14, 16, 33, 586, DateTimeKind.Utc).AddTicks(5730),
+                            Id = new Guid("a5642ae8-f955-41fa-92ea-309de117c617"),
+                            CreatedAt = new DateTime(2022, 11, 28, 20, 1, 36, 908, DateTimeKind.Utc).AddTicks(3140),
                             Name = "Things",
                             PolishLabel = "Rzeczy 🎸"
                         });
@@ -74,10 +70,10 @@ namespace Garnek.WebAPI.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -88,20 +84,20 @@ namespace Garnek.WebAPI.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid?>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid?>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -116,16 +112,16 @@ namespace Garnek.WebAPI.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("Points")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -136,20 +132,20 @@ namespace Garnek.WebAPI.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid?>("GameId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<Guid?>("TeamId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

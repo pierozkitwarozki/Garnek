@@ -1,5 +1,6 @@
 ﻿using Garnek.Infrastructure.Configuration;
 using Garnek.Infrastructure.DataAccess;
+using Garnek.Infrastructure.Services;
 using Garnek.WebAPI.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -27,6 +28,8 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services
     .AddDatabaseConnection(builder.Configuration)
     .AddRepositories();
+
+builder.Services.AddHostedService<DatabaseCleanerService>();
 
 builder.Services.AddCors(x => 
     x.AddPolicy("defaultPolicy", x 

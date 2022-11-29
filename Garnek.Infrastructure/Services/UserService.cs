@@ -14,7 +14,7 @@ public class UserService : IUserService
     private readonly IGameRepository _gameRepository;
     private readonly IValidator<InitializeGameRequest> _validator;
     private readonly IHashidsService _hashidsService;
-    private const string BaseUrl = """https://garnek.phrase/""";
+    private const string BaseUrl = """https://garnek.azurewebsites.net/#/""";
 
     public UserService(IUserRepository userRepository, IGameRepository gameRepository, 
         IValidator<InitializeGameRequest> validator, IHashidsService hashidsService)

@@ -2,8 +2,7 @@
 WORKDIR /app
 COPY . .
 
-RUN npm ci && npm run build
-#RUN npm ci && npm run build -- --configuration production
+RUN npm ci && npm run build -- --configuration production
 
 FROM nginx:alpine
 COPY --from=frontend /app/dist/Frontend /usr/share/nginx/html

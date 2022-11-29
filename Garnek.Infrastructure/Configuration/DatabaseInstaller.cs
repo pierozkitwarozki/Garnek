@@ -11,10 +11,9 @@ public static class DatabaseInstaller
 	{
 		services.AddDbContext<DatabaseContext>(b => b
 			.UseLazyLoadingProxies()
-			.UseSqlServer(configuration
-			.GetConnectionString("SqlServer"),
-				x => x.MigrationsAssembly("Garnek.WebAPI")
-					.EnableRetryOnFailure(6, TimeSpan.FromSeconds(10), null)));
+			.UseSqlite(configuration
+			.GetConnectionString("Sqlite"),
+				x => x.MigrationsAssembly("Garnek.WebAPI")));
 
 		return services;
 	}
@@ -22,9 +21,9 @@ public static class DatabaseInstaller
 	public static IServiceCollection AddDatabaseWorkerConnection(this IServiceCollection services, IConfiguration configuration)
 	{
 		services.AddDbContextPool<DatabaseContext>(b => b
-			.UseSqlServer(configuration
-					.GetConnectionString("SqlServer"),
-				x => x.EnableRetryOnFailure(6, TimeSpan.FromSeconds(10), null)));
+			.UseLazyLoadingProxies()
+			.UseSqlite(configuration
+					.GetConnectionString("Sqlite")));
 
 		return services;
 	}
