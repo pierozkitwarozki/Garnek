@@ -46,4 +46,8 @@
     <Folder Include="Configuration" />
     <Folder Include="Configuration\" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
 </Project>

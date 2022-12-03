@@ -32,15 +32,15 @@ public class DatabaseCleanerService : BackgroundService
                 var teams = await context.Teams
                     .Where(x => x.CreatedAt <= DateTime.UtcNow.AddHours(-2))
                     .ToListAsync(stoppingToken);
-                var users = teams
-                    .SelectMany(x => x.Users)
-                    .ToList();
-                var phrases = users
-                    .SelectMany(x => x.Phrases)
-                    .ToList();
-                var games = users
-                    .Select(x => x.Game)
-                    .ToList();
+                var users = await context.Users
+                    .Where(x => x.CreatedAt <= DateTime.UtcNow.AddHours(-2))
+                    .ToListAsync(stoppingToken);
+                var phrases = await context.Phrases
+                    .Where(x => x.CreatedAt <= DateTime.UtcNow.AddHours(-2))
+                    .ToListAsync(stoppingToken);
+                var games = await context.Games
+                    .Where(x => x.CreatedAt <= DateTime.UtcNow.AddHours(-2))
+                    .ToListAsync(stoppingToken);
                 
                 context.RemoveRange(teams);
                 context.RemoveRange(phrases);

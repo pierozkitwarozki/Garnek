@@ -1,4 +1,5 @@
-﻿using Garnek.Infrastructure.Configuration;
+﻿using System.Reflection;
+using Garnek.Infrastructure.Configuration;
 using Garnek.Infrastructure.DataAccess;
 using Garnek.Infrastructure.Services;
 using Garnek.WebAPI.Filters;
@@ -24,6 +25,10 @@ builder.Services.AddSwaggerGen(options =>
             Url = new Uri("https://www.linkedin.com/in/bartlomiejpierog98/")
         }
     });
+    
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    options.IncludeXmlComments(xmlPath);   
 });
 builder.Services
     .AddDatabaseConnection(builder.Configuration)
@@ -49,8 +54,9 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
+app.UseStaticFiles();
 //}
 
 app.UseCors(app.Environment.IsDevelopment() ? "defaultPolicy" : "prodPolicy");

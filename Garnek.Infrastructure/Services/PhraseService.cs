@@ -91,7 +91,9 @@ public class PhraseService : IPhraseService
         await ValidateGameIdAsync(gameId);
 
         var phrases = await _phraseRepository.GetByGameIdAsync(gameId);
-        var phraseNames = phrases.Select(x => x.Name);
+        var phraseNames = phrases
+            .Select(x => x.Name)
+            .OrderBy(x => Random.Shared.Next(1000));
 
         return new GetPhrasesResponse(gameId, phraseNames);
     }
